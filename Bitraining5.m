@@ -93,14 +93,16 @@ for Realization = 1 : N_Realizations
             [g11, g12, g13, g21, g22, g23, g31, g32, g33] = MSE(H11, H12, H13, H21, H22, H23, H31, H32, H33, v11, v12, v13, v21, v22, v23, v31, v32, v33, n0);
             %norm(g1)^2
             %norm(g2)^2
+            %Power = [norm(g11)^2+norm(g12)^2+norm(g13)^2 norm(g21)^2+norm(g22)^2+norm(g23)^2 norm(g31)^2+norm(g32)^2+norm(g33)^2]
 
-            
+            %{
             g12 = zeros(2, 1);
             g13 = zeros(2, 1); 
             g21 = zeros(2, 1); 
             g23 = zeros(2, 1); 
             g31 = zeros(2, 1); 
-            g32 = zeros(2, 1); 
+            g32 = zeros(2, 1);
+            %}
           
 
 
@@ -109,7 +111,7 @@ for Realization = 1 : N_Realizations
             SINR3 = norm(g33'*(H31*v13+H32*v23+H33*v33))^2/(norm(g33'*(H31*v12+H32*v22+H33*v32))^2+norm(g33'*(H31*v12+H32*v22+H33*v32))^2+n0*g33'*g33);
             C1(Realization, numiters) = abs(log2(1+SINR1));
             C2(Realization, numiters) = abs(log2(1+SINR2));
-            C2(Realization, numiters) = abs(log2(1+SINR3));
+            C3(Realization, numiters) = abs(log2(1+SINR3));
             end           
     
 end
@@ -123,7 +125,7 @@ end
 
 p1=plot(iternums, mean(C1)+mean(C2)+mean(C3),'o');
 
-axis([1 numiters 0 14])
+axis([1 numiters 0 20])
 
 xlabel('Number of iterations')
 ylabel('C(bits/channel)')
